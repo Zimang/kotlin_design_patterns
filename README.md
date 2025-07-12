@@ -146,3 +146,28 @@ class Squad(private val units: List<Trooper>): Trooper {
 2. 对于性能至关重要的情况，且您完全确定两个线程永远不会同时执行相同的代码块，您可以使用`LazyThreadSafetyMode.NONE`，它不提供任何线程安全机制。代理和委托是解决许多复杂挑战的非常有效的方法。
 
 在接下来的章节中，我们将深入探讨这些概念，进一步阐明它们的实用性。
+
+
+
+```kotlin
+class Snail {
+    internal var mood: Mood = Still(this)
+    private var healthPoints = 10
+        // That's all!
+}
+
+sealed class Mood : WhatCanHappen
+
+class Still(private val snail: Snail) : Mood() {
+    override fun seeHero() {
+    	snail.mood = Aggressive
+    }
+    override fun getHit(pointsOfDamage: Int) {
+    	// Same logic from before 
+    }
+    override fun calmAgain() {
+    	// Return to Still state
+    }
+}
+```
+

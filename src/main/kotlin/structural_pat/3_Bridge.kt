@@ -3,6 +3,12 @@ package top.zimang.structural_pat
 /**
  * 桥接设计模式是一个很棒的工具，可以**避免滥用继承**并创建更灵活、易维护的代码的陷阱。
  * 它有助于将抽象与实现分离，从而实现更好的可扩展性。
+ *
+ * A接口有3种实现,B接口有3中实现
+ *
+ * 如果我们要完整给出,用一般方法,类会有3*3即9中类
+ *
+ * 如果桥接则是3+3+1即其中类,其中一种类以两个接口为构造函数参数,灵活加载实现3*3的组合
  */
 fun main() {
     val stormTrooper = StormTrooper(Rifle(), RegularLegs())
@@ -123,6 +129,16 @@ interface Weapon {
 
 interface Legs {
     fun move(x: Long, y: Long): Meters
+}
+
+class WeLegs(val weapon: Weapon,val legs: Legs): Weapon, Legs{
+    override fun attack(x: Long, y: Long): PointsOfDamage {
+        return weapon.attack(x,y)
+    }
+
+    override fun move(x: Long, y: Long): Meters {
+        return legs.move(x,y)
+    }
 }
 
 /**
